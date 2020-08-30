@@ -123,7 +123,7 @@ public class OneTest {
     }
 
     @Test
-    @DisplayName("Navegando na página de Instruções após clique no botão")
+    @DisplayName("Tentando navegar na página Tipos de Teste")
     public void testAcessarPaginaEncontrada() {
         try {
             driver.get("https://app.crowdtest.me/tipos-bugs-softwares/");
