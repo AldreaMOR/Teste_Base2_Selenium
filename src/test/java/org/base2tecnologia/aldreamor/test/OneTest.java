@@ -19,7 +19,7 @@ import java.util.List;
 public class OneTest {
 
     ChromeDriver driver;
-    FirefoxDriver driver2;
+    //FirefoxDriver driver2;
 
     public OneTest(ChromeDriver driver) {
         this.driver = driver;
@@ -79,6 +79,61 @@ public class OneTest {
             acao.perform()*/
 
 
+
+        } finally {
+            driver.quit();
+        }
+    }
+
+    @Test
+    @DisplayName("Navegando no subitem do Menu CrowdTest")
+    public void testNavegandoSubItem() {
+        try {
+            driver.get("https://www.base2.com.br/seja-um-testador/");
+
+            String value = driver.findElement(By.cssSelector("span")).getTagName();
+            System.out.println("Span encontrado "+value);
+
+            //driver.findElement(By.cssSelector("ow-button-base[type='submit']")).click();
+
+            driver.findElement(By.linkText("INSTRUÇÕES")).click();
+
+        } finally {
+            driver.quit();
+        }
+    }
+
+    @Test
+    @DisplayName("Navegando na página de Instruções após clique no botão")
+    public void testNavegandoIntrucoes() {
+        try {
+            driver.get("https://www.base2.com.br/instrucoes-para-relatar-bugs/");
+
+            String value = driver.findElement(By.cssSelector("a")).getTagName();
+            //String value = driver.findElement(By.linkText("tipos de teste")).getTagName();
+            System.out.println("a href encontrado "+value);
+            //Instant wait = null;
+            //wait.until(ExpectedConditions.elementToBeClickable(
+            //        driver.findElements(By.tagName("button")).stream().filter(i -> i.getText().equals("Advanced...")).findFirst().get())).click();
+            //driver.findElement(By.linkText("tipos de teste")).click();
+
+        } finally {
+            driver.quit();
+        }
+    }
+
+    @Test
+    @DisplayName("Navegando na página de Instruções após clique no botão")
+    public void testAcessarPaginaEncontrada() {
+        try {
+            driver.get("https://app.crowdtest.me/tipos-bugs-softwares/");
+            //captureNetworkTraffic();
+            String value = driver.findElement(By.cssSelector("title")).getText();
+            //The page you were looking for doesn't exist (404)
+            //String value = driver.findElement(By.linkText("tipos de teste")).getTagName();
+            System.out.println("title encontrado "+value);
+
+            //driver.findElement(By.linkText("tipos de teste")).click();
 
         } finally {
             driver.quit();
