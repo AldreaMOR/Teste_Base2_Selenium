@@ -1,6 +1,7 @@
 package org.base2tecnologia.aldreamor.test;
 
 import io.github.bonigarcia.seljup.SeleniumExtension;
+import org.assertj.core.api.AbstractStringAssert;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @ExtendWith(SeleniumExtension.class)
@@ -53,35 +55,15 @@ public class OneTest {
         try {
             driver.get("https://www.base2.com.br/");
 
-            String value = driver.findElement(By.cssSelector("#menu-item-729")).getTagName();
-            System.out.println("Menu encontrado "+value);
+           /* WebElement webElementTitle =
+                    driver.findElement(By.cssSelector("a[href=\"https://www.base2.com.br/seja-um-testador/\"]"));
+            Assertions.assertThat(webElementTitle.getText()).isEqualTo("Seja um Testador");*/
 
-            /*WebElement menu = driver.findElement(By.cssSelector("#menu-item-729"));
-            //WebElement menu = driver.findElement(By.xpath("//a[contains(text(),'Seja um Testador')]"));
-            //driver.findElement(By.id("menu-item-729")).click();
-            Actions actions = new Actions(driver);
-            //Instant wait = null;
-            //wait.until(ExpectedConditions.visibilityOfElementLocated((menu));
-            actions.moveToElement(menu);
-            actions.click();
-            actions.perform();
-            //encontra segundo menu e acessa o menu<br>
-           // driver.findElement(By.linkText("Seja um Testador")).click();
+            driver.findElement(By.cssSelector("a[href=\"https://www.base2.com.br/seja-um-testador/\"]")).isSelected();
+            //driver.findElement(By.cssSelector("li[\"menu-item-729\"]")).isSelected();
 
-            /*Actions acao = new Actions(driver);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(menu));
-            WebElement menuMouseOver = driver.findElement(menu);
-            acao.moveToElement(menuMouseOver).moveToElement(driver.findElement(itemMenu)).click().build().perform();
-
-
-            Actions acao = new Actions(driver);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(menu));
-            acao.moveToElement(driver.findElement(menu));
-            acao.moveToElement(driver.findElement(itemMenu));
-            acao.click();
-            acao.perform()*/
-
-
+            /*ArrayList tabs = new ArrayList (driver.getWindowHandles());
+            driver.switchTo().window((String) tabs.get(1));*/
 
         } finally {
             driver.quit();
@@ -96,7 +78,6 @@ public class OneTest {
 
         driver.findElement(By.cssSelector("a[href=\"/instrucoes-para-relatar-bugs\"]")).click();
 
-        //ABA FDP
         ArrayList tabs = new ArrayList (driver.getWindowHandles());
         driver.switchTo().window((String) tabs.get(1));
 
@@ -105,21 +86,28 @@ public class OneTest {
     }
 
     @Test
-    @DisplayName("Eu como usuário quero navegar na página 'Seja um testador' e clicar no link 'Tipos de teste'.")
-    public void devoClicarLinkTiposdeTeste() {
+    @DisplayName("Eu como usuário quero navegar na página 'Instruções para relatar bugs' e visualizar o link 'tipos de bugs'.")
+    public void devoVisualizarLinkTiposdeBugs() {
+        driver.get("https://www.base2.com.br/instrucoes-para-relatar-bugs/");
 
-            driver.get("https://www.base2.com.br/instrucoes-para-relatar-bugs/");
+        WebElement webElementTitle =
+                driver.findElement(By.cssSelector("a[href=\"https://app.crowdtest.me/tipos-bugs-softwares/\"]"));
+        Assertions.assertThat(webElementTitle.getText()).isEqualTo("tipos de bugs");
 
-            //String value = driver.findElement(By.cssSelector("a")).getTagName();
-            WebElement value = driver.findElement(By.xpath("//*[contains(text(), 'tipos de teste')]"));
-            //String value = driver.findElement(By.linkText("tipos de teste")).getTagName();
-            System.out.println("a href encontrado "+value);
-            //Instant wait = null;
-            //wait.until(ExpectedConditions.elementToBeClickable(
-            //        driver.findElements(By.tagName("button")).stream().filter(i -> i.getText().equals("Advanced...")).findFirst().get())).click();
-            //driver.findElement(By.linkText("tipos de teste")).click();
+    }
 
-            driver.quit();
+    @Test
+    @DisplayName("Eu como usuário quero navegar na página 'Instruções para relatar bugs' e clicar no link 'tipos de bugs'.")
+    public void devoClicarLinkTiposdeBugs() {
+        driver.get("https://www.base2.com.br/instrucoes-para-relatar-bugs/");
+
+        driver.findElement(By.cssSelector("a[href=\"https://app.crowdtest.me/tipos-bugs-softwares/\"]")).click();
+
+        ArrayList tabs = new ArrayList (driver.getWindowHandles());
+        driver.switchTo().window((String) tabs.get(1));
+
+        //delay
+        Assertions.assertThat(driver.getTitle()).contains("page");
 
     }
 
@@ -127,6 +115,7 @@ public class OneTest {
     @DisplayName("Eu como usuário quero visualizar a página Tipos de Testes, após acessar o link.")
     public void devoVisualizarPaginaAposClicarLink() {
         try {
+            /*Este teste irá dar erro porque a página não existe.*/
             driver.get("https://app.crowdtest.me/tipos-bugs-softwares/");
             //captureNetworkTraffic();
             Assertions.assertThat(driver.getTitle()).contains("Tipos de teste");
